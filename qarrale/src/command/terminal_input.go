@@ -5,6 +5,7 @@ import (
 	"compmath4/qarrale/src/input_output"
 	"compmath4/qarrale/src/methods"
 	"compmath4/qarrale/src/util"
+	"fmt"
 	"os"
 	"sort"
 )
@@ -16,38 +17,42 @@ type terminalInput struct {
 
 func (t *terminalInput) execute(argc ...string) {
 
+	fmt.Println("Введите количество нод(>=7)")
+	fmt.Println("Затем ноды в формате x1 y1\\n")
+
 	data, _ := input_output.ReadData(os.Stdin)
+	if data.Node < 7 {
+		fmt.Println("Число нод должно быть боле = 7")
+		return
+	}
 
 	a, b, r := methods.CompleteLine(data)
-	first := methods.Line{a, b, r}
+	first := methods.Line{A: a, B: b, R: r}
 
 	a0, a1, a2 := methods.CompleteQuadr(data)
-	second := methods.Quadr{a0, a1, a2}
+	second := methods.Quadr{A: a0, B: a1, C: a2}
 
 	a, b = methods.CompleteExp(data)
-	third := methods.Exp{a, b}
+	third := methods.Exp{A: a, B: b}
 
 	a, b = methods.CompleteDeg(data)
-	forth := methods.Deg{a, b}
+	forth := methods.Deg{A: a, B: b}
 
 	a, b = methods.CompleteLog(data)
-	fifth := methods.Log{a, b}
+	fifth := methods.Log{A: a, B: b}
 
 	sort.Float64s(data.Nodes_x)
 	sort.Float64s(data.Nodes_y)
 
 	graphic.Draw(data, graphic.DrawFunction([]methods.Function{&first, &second, &third, &forth, &fifth}, data.Nodes_x[0]-5, data.Nodes_x[data.Node-1]+5, data.Nodes_y[0]-5, data.Nodes_y[data.Node-1]+5))
 
-	err1 := input_output.WriteData(os.Stdout, util.FloatToString(first.A), util.FloatToString(first.B), util.FloatToString(first.R))
-	err2 := input_output.WriteData(os.Stdout, util.FloatToString(second.A), util.FloatToString(second.B), util.FloatToString(second.C))
-	err3 := input_output.WriteData(os.Stdout, util.FloatToString(third.A), util.FloatToString(third.B))
-	err4 := input_output.WriteData(os.Stdout, util.FloatToString(forth.A), util.FloatToString(forth.B))
-	err5 := input_output.WriteData(os.Stdout, util.FloatToString(fifth.A), util.FloatToString(fifth.B))
-
 	doubler := methods.Check([]methods.Function{&first, &second, &third, &forth, &fifth}, data)
-	for _, rr := range doubler {
-		_ = input_output.WriteData(os.Stdout, util.FloatToString(rr))
-	}
+
+	err1 := input_output.WriteData(os.Stdout, "Линейная:", "a:", util.FloatToString(first.A), "b:", util.FloatToString(first.B), "r:", util.FloatToString(first.R), "sigma:", util.FloatToString(doubler[0]))
+	err2 := input_output.WriteData(os.Stdout, "Квадратичная:", "a2:", util.FloatToString(second.A), "a1:", util.FloatToString(second.B), "a0:", util.FloatToString(second.C), "sigma:", util.FloatToString(doubler[1]))
+	err3 := input_output.WriteData(os.Stdout, "Экспоненциальная:", "a:", util.FloatToString(third.A), "b:", util.FloatToString(third.B), "sigma:", util.FloatToString(doubler[2]))
+	err4 := input_output.WriteData(os.Stdout, "Степенная:", "a:", util.FloatToString(forth.A), "b:", util.FloatToString(forth.B), "sigma:", util.FloatToString(doubler[3]))
+	err5 := input_output.WriteData(os.Stdout, "Логорифмическая:", "a:", util.FloatToString(fifth.A), "b:", util.FloatToString(fifth.B), "sigma:", util.FloatToString(doubler[4]))
 
 	util.HandleError(&err1)
 	util.HandleError(&err2)

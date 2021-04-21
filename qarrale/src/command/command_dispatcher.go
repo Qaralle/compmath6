@@ -9,7 +9,7 @@ var commands map[string]Command
 func init() {
 	commands = make(map[string]Command)
 	commands["terminal"] = &terminalInput{0, "terminal"}
-	commands["file"] = &fileInput{2, "file"}
+	commands["file"] = &fileInput{1, "file"}
 
 }
 

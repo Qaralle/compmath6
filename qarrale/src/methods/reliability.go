@@ -6,16 +6,15 @@ import (
 )
 
 func Check(function []Function, data model.Data) [5]float64 {
-	var up, down1, down2 float64
+	var up float64
 	var a = [5]float64{}
 
 	for i, f := range function {
+		up = 0
 		for i := 0; i < data.Node; i++ {
-			up += math.Pow(data.Nodes_y[i]-f.F(data.Nodes_x[i]), 2)
-			down1 += math.Pow(f.F(data.Nodes_x[i]), 2)
-			down2 += f.F(data.Nodes_x[i])
+			up += math.Pow(f.F(data.Nodes_x[i])-data.Nodes_y[i], 2)
 		}
-		a[i] = 1 - (up / (down1 - (float64(1/data.Node) * math.Pow(down2, 2))))
+		a[i] = math.Sqrt(up / float64(data.Node))
 	}
 	return a
 }
