@@ -1,8 +1,8 @@
 package graphic
 
 import (
+	"compmath4/qarrale/src/function"
 	"compmath4/qarrale/src/model"
-	"compmath4/qarrale/src/polynoms"
 	"golang.org/x/exp/rand"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
@@ -11,16 +11,16 @@ import (
 	"image/color"
 )
 
-func DrawFunction(function []polynoms.FunctionInt, a, b, c, d float64) *plot.Plot {
+func DrawFunction(functions []function.Function, a, b, c, d float64) *plot.Plot {
 	p := plot.New()
 
 	p.Title.Text = "Functions"
 	p.X.Label.Text = "X"
 	p.Y.Label.Text = "Y"
 
-	for i := 0; i < len(function); i++ {
+	for i := 0; i < len(functions); i++ {
 
-		quad := plotter.NewFunction(function[i].F)
+		quad := plotter.NewFunction(functions[i].F)
 		quad.Color = color.RGBA{R: uint8(rand.Intn(255-0) + 0), B: uint8(rand.Intn(255-0) + 0), A: uint8(rand.Intn(255-0) + 0)}
 
 		p.Add(quad)

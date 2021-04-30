@@ -1,6 +1,7 @@
 package command
 
 import (
+	"compmath4/qarrale/src/input_output"
 	"errors"
 )
 
@@ -10,12 +11,14 @@ func init() {
 	commands = make(map[string]Command)
 	commands["terminal"] = &terminalInput{0, "terminal"}
 	commands["file"] = &fileInput{1, "file"}
-
+	commands["terminal_e"] = &terminalHelperInput{0, "terminal_e"}
 }
 
 func dispatch(splitedCommand []string) error {
 
 	currentCommand, ok := commands[splitedCommand[0]]
+	input_output.Init()
+
 	if ok {
 		if int(currentCommand.getArgs()) == len(splitedCommand)-1 {
 			commands[currentCommand.getName()].execute(splitedCommand[1:]...)
