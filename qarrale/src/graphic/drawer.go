@@ -1,8 +1,8 @@
 package graphic
 
 import (
-	"compmath4/qarrale/src/methods"
 	"compmath4/qarrale/src/model"
+	"compmath4/qarrale/src/polynoms"
 	"golang.org/x/exp/rand"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
@@ -11,7 +11,7 @@ import (
 	"image/color"
 )
 
-func DrawFunction(function []methods.Function, a, b, c, d float64) *plot.Plot {
+func DrawFunction(function []polynoms.FunctionInt, a, b, c, d float64) *plot.Plot {
 	p := plot.New()
 
 	p.Title.Text = "Functions"

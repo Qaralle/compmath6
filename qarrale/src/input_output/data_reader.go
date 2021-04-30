@@ -16,11 +16,17 @@ func ReadData(rd io.Reader) (model2.Data, error) {
 	util.HandleError(&err)
 	text = strings.TrimSuffix(text, "\n")
 
-	node, _ := strconv.Atoi(text)
+	n, _ := strconv.Atoi(text)
 
-	nodes_x := make([]float64, node)
-	nodes_y := make([]float64, node)
-	for i := 0; i < node; i++ {
+	text, err = reader.ReadString('\n')
+	util.HandleError(&err)
+	text = strings.TrimSuffix(text, "\n")
+
+	x, _ := strconv.ParseFloat(text, 64)
+
+	nodes_x := make([]float64, n)
+	nodes_y := make([]float64, n)
+	for i := 0; i < n; i++ {
 		text_x, err := reader.ReadString(' ')
 		util.HandleError(&err)
 		text_x = strings.TrimSuffix(text_x, " ")
@@ -31,6 +37,6 @@ func ReadData(rd io.Reader) (model2.Data, error) {
 		nodes_y[i], _ = strconv.ParseFloat(text_y, 32)
 	}
 
-	return model2.Data{"test", node, nodes_x, nodes_y, 0}, nil
+	return model2.Data{"test", n, nodes_x, nodes_y, 0, x}, nil
 
 }
