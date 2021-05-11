@@ -1,8 +1,8 @@
 package command
 
 import (
-	"compmath4/qarrale/src/input_output"
-	"compmath4/qarrale/src/util"
+	"compmath5/qarrale/src/input_output"
+	"compmath5/qarrale/src/util"
 	"os"
 )
 

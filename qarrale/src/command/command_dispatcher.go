@@ -1,7 +1,7 @@
 package command
 
 import (
-	"compmath4/qarrale/src/input_output"
+	"compmath5/qarrale/src/input_output"
 	"errors"
 )
 

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"compmath4/qarrale/src/command"
+	"compmath5/qarrale/src/command"
 )
 
 func main() {

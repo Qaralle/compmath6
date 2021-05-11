@@ -1,10 +1,10 @@
 package command
 
 import (
-	"compmath4/qarrale/src/function"
-	"compmath4/qarrale/src/graphic"
-	"compmath4/qarrale/src/input_output"
-	"compmath4/qarrale/src/polynoms"
+	"compmath5/qarrale/src/function"
+	"compmath5/qarrale/src/graphic"
+	"compmath5/qarrale/src/input_output"
+	"compmath5/qarrale/src/polynoms"
 	"fmt"
 	"os"
 )

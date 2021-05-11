@@ -1,6 +1,6 @@
 package model
 
-import "compmath4/qarrale/src/function"
+import "compmath5/qarrale/src/function"
 
 type Data struct {
 	Name     string

@@ -1,6 +1,6 @@
 package polynoms
 
-import "compmath4/qarrale/src/model"
+import "compmath5/qarrale/src/model"
 
 type Lagranj struct {
 	X    float64

@@ -1,8 +1,8 @@
 package graphic
 
 import (
-	"compmath4/qarrale/src/function"
-	"compmath4/qarrale/src/model"
+	"compmath5/qarrale/src/function"
+	"compmath5/qarrale/src/model"
 	"golang.org/x/exp/rand"
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"

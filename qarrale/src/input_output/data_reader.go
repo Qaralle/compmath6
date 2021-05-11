@@ -2,8 +2,8 @@ package input_output
 
 import (
 	"bufio"
-	"compmath4/qarrale/src/model"
-	"compmath4/qarrale/src/util"
+	"compmath5/qarrale/src/model"
+	"compmath5/qarrale/src/util"
 	"io"
 	"strconv"
 	"strings"

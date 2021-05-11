@@ -1,6 +1,6 @@
 package polynoms
 
-import "compmath4/qarrale/src/model"
+import "compmath5/qarrale/src/model"
 
 type Newton struct {
 	X    float64

@@ -2,7 +2,7 @@ package command
 
 import (
 	"bufio"
-	"compmath4/qarrale/src/util"
+	"compmath5/qarrale/src/util"
 	"fmt"
 	"os"
 	"strings"
