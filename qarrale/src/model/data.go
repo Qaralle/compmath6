@@ -4,10 +4,11 @@ import "compmath5/qarrale/src/function"
 
 type Data struct {
 	Name     string
-	Node     int
-	Nodes_x  []float64
-	Nodes_y  []float64
-	S        float64
-	X        float64
+	A        float64
+	B        float64
+	Y0       float64
+	H        float64
+	XValues  []float64
+	YValues  []float64
 	Function function.Function
 }

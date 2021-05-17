@@ -1,11 +1,12 @@
 package command
 
 import (
-	"compmath5/qarrale/src/function"
 	"compmath5/qarrale/src/graphic"
 	"compmath5/qarrale/src/input_output"
-	"compmath5/qarrale/src/polynoms"
+	"compmath5/qarrale/src/methods"
+	"compmath5/qarrale/src/util"
 	"fmt"
+	"math"
 	"os"
 )
 
@@ -15,26 +16,43 @@ type terminalHelperInput struct {
 }
 
 func (t terminalHelperInput) execute(argc ...string) {
-	fmt.Println("Введите количество нод(>=7)")
-	fmt.Println("Введите точку в которой нужно вычеслить значение")
-	fmt.Println("Затем ноды в формате x1 y1\\n")
+	var yh, y2h float64
 
-	data, _ := input_output.ReadData(os.Stdin, true)
-	if data.Node < 2 {
-		fmt.Println("Число нод должно быть боле = 7")
+	data, env, _ := input_output.ReadData(os.Stdin, true)
+
+	flag := util.Check(&data)
+
+	if !flag {
 		return
 	}
 
-	first := polynoms.Lagranj{data.X, data}
-	result := first.F(data.X)
-	fmt.Println(result)
+	input_output.Calculate(&data)
 
-	second := polynoms.Newton{data.X, data}
-	result2 := second.F(data.X)
-	fmt.Println(result2)
+	yValues := env.Method.Calculate(data)
+	data.YValues = yValues
 
-	graphic.Draw(data, graphic.DrawFunction([]function.Function{&first, &second, data.Function},
-		data.Nodes_x[0]-1, data.Nodes_x[data.Node-1]+1, data.Nodes_y[0]-1, data.Nodes_y[data.Node-1]+1))
+	data.Function.C_calculate(data.XValues[0], yValues[0])
+
+	for i := 0; i < len(data.XValues); i++ {
+		if data.XValues[i] == data.XValues[0]+2*data.H {
+			yh = yValues[i]
+		}
+
+		if math.IsInf(yValues[i], 1) || math.IsInf(yValues[i], -1) {
+			fmt.Println("Слишком большое значение функции")
+			return
+		}
+
+		fmt.Println("x = ", data.XValues[i], "|| y = ", yValues[i], "|| Yт = ", data.Function.F_clear(data.XValues[i]))
+	}
+
+	graphic.Draw(data, graphic.DrawFunction(data.Function, data.A-1, data.B+1))
+
+	data.H /= 2
+	input_output.Calculate(&data)
+	yValues = env.Method.Calculate(data)
+
+	fmt.Println("точность = ", methods.CalculateCap(yh, y2h, env.Method.GetAccur()))
 
 }
 

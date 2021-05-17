@@ -11,36 +11,30 @@ import (
 	"image/color"
 )
 
-func DrawFunction(functions []function.Function, a, b, c, d float64) *plot.Plot {
+func DrawFunction(function function.Function, a, b float64) *plot.Plot {
 	p := plot.New()
 
 	p.Title.Text = "Functions"
 	p.X.Label.Text = "X"
 	p.Y.Label.Text = "Y"
 
-	for i := 0; i < len(functions); i++ {
+	quad := plotter.NewFunction(function.F_clear)
+	quad.Color = color.RGBA{R: uint8(rand.Intn(255-0) + 0), B: uint8(rand.Intn(255-0) + 0), A: uint8(rand.Intn(255-0) + 0)}
 
-		quad := plotter.NewFunction(functions[i].F)
-		quad.Color = color.RGBA{R: uint8(rand.Intn(255-0) + 0), B: uint8(rand.Intn(255-0) + 0), A: uint8(rand.Intn(255-0) + 0)}
-
-		p.Add(quad)
-
-	}
+	p.Add(quad)
 
 	p.X.Min = a
 	p.X.Max = b
-	p.Y.Min = c
-	p.Y.Max = d
 
 	return p
 }
 
 func Draw(data model.Data, p *plot.Plot) {
-	pts := make(plotter.XYs, data.Node)
+	pts := make(plotter.XYs, len(data.XValues))
 
-	for i := 0; i < data.Node; i++ {
-		pts[i].X = data.Nodes_x[i]
-		pts[i].Y = data.Nodes_y[i]
+	for i := 0; i < len(data.XValues); i++ {
+		pts[i].X = data.XValues[i]
+		pts[i].Y = data.YValues[i]
 	}
 
 	_ = plotutil.AddLinePoints(p, "dots", pts)

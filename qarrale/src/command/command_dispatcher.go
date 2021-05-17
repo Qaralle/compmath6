@@ -9,9 +9,9 @@ var commands map[string]Command
 
 func init() {
 	commands = make(map[string]Command)
-	commands["terminal"] = &terminalInput{0, "terminal"}
+	//commands["terminal"] = &terminalInput{0, "terminal"}
 	commands["file"] = &fileInput{1, "file"}
-	commands["terminal_e"] = &terminalHelperInput{0, "terminal_e"}
+	commands["terminal"] = &terminalHelperInput{0, "terminal"}
 }
 
 func dispatch(splitedCommand []string) error {

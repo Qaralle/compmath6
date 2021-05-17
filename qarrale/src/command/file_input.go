@@ -17,7 +17,7 @@ func (t *fileInput) execute(argc ...string) {
 	util.HandleError(&err)
 	defer file.Close()
 
-	_, _ = input_output.ReadData(file, false)
+	_, _, _ = input_output.ReadData(file, false)
 
 }
 

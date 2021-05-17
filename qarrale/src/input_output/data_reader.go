@@ -2,55 +2,55 @@ package input_output
 
 import (
 	"bufio"
+	"compmath5/qarrale/src/dto"
 	"compmath5/qarrale/src/model"
 	"compmath5/qarrale/src/util"
+	"fmt"
 	"io"
 	"strconv"
 	"strings"
 )
 
-func ReadData(rd io.Reader, flag bool) (model.Data, error) {
+func ReadData(rd io.Reader, flag bool) (model.Data, dto.Env, error) {
 
 	reader := bufio.NewReader(rd)
-	text, err := reader.ReadString('\n')
-	util.HandleError(&err)
-	text = strings.TrimSuffix(text, "\n")
 
-	n, _ := strconv.Atoi(text)
-
-	text, err = reader.ReadString('\n')
-	util.HandleError(&err)
-	text = strings.TrimSuffix(text, "\n")
-
-	x, _ := strconv.ParseFloat(text, 64)
-
-	nodes_x := make([]float64, n)
-	nodes_y := make([]float64, n)
 	if flag {
 
-		function := Prepare(reader)
+		method := PrepareMethod(reader)
+		function := PrepareFunction(reader)
 
-		for i := 0; i < n; i++ {
-			text_x, err1 := reader.ReadString('\n')
-			util.HandleError(&err1)
-			text_x = strings.TrimSuffix(text_x, "\n")
-			nodes_x[i], _ = strconv.ParseFloat(text_x, 32)
-			nodes_y[i] = function.F(nodes_x[i])
-		}
-		return model.Data{"test", n, nodes_x, nodes_y, 0, x, function}, nil
+		fmt.Println("Введите интервал [a;b] через пробел: ")
+
+		a, err := reader.ReadString(' ')
+		util.HandleError(&err)
+		a = strings.TrimSuffix(a, " ")
+		aValue, _ := strconv.ParseFloat(a, 64)
+
+		b, err := reader.ReadString('\n')
+		util.HandleError(&err)
+		b = strings.TrimSuffix(b, "\n")
+		bValue, _ := strconv.ParseFloat(b, 64)
+
+		fmt.Println("Введите шаг разбиения h: ")
+		h, err := reader.ReadString('\n')
+		util.HandleError(&err)
+		h = strings.TrimSuffix(h, "\n")
+		hValue, _ := strconv.ParseFloat(h, 64)
+
+		fmt.Println("Введите шаг разбиения y0: ")
+		y0, err := reader.ReadString('\n')
+		util.HandleError(&err)
+		y0 = strings.TrimSuffix(y0, "\n")
+		y0Value, _ := strconv.ParseFloat(y0, 64)
+
+		return model.Data{Name: "test", A: aValue, B: bValue, Y0: y0Value, H: hValue, Function: function}, dto.Env{Method: method}, nil
 
 	} else {
-		for i := 0; i < n; i++ {
-			text_x, err := reader.ReadString(' ')
-			util.HandleError(&err)
-			text_x = strings.TrimSuffix(text_x, " ")
-			nodes_x[i], _ = strconv.ParseFloat(text_x, 32)
-			text_y, err1 := reader.ReadString('\n')
-			util.HandleError(&err1)
-			text_y = strings.TrimSuffix(text_y, "\n")
-			nodes_y[i], _ = strconv.ParseFloat(text_y, 32)
-		}
-		return model.Data{"test", n, nodes_x, nodes_y, 0, x, nil}, nil
+
+		method := PrepareMethod(reader)
+		function := PrepareFunction(reader)
+		return model.Data{Name: "test", A: 1, B: 1, Y0: 1, Function: function}, dto.Env{Method: method}, nil
 
 	}
 
